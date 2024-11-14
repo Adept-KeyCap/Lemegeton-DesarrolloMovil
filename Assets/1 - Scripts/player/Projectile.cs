@@ -24,10 +24,15 @@ public class Projectile : MonoBehaviour
         this.range = range;
     }
 
+    private void OnEnable()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        startPos = gameObject.transform.position;
+    }
+
     private void Awake()
     {
         rg = GetComponent<Rigidbody2D>();
-        startPos = gameObject.transform.position;
         range = player.shotRange;
 
         if(UnityEngine.Object.FindAnyObjectByType<TutorialManager>() != null )
@@ -43,8 +48,8 @@ public class Projectile : MonoBehaviour
         //Debug.Log("Range: "+range);
         if (distance > range)
         {
-            Destroy(gameObject);
-            Debug.Log("Proyectile Out of Reach, therefore Desrtoyed");
+            gameObject.SetActive(false);
+            Debug.Log("Proyectile Out of Reach, therefore back to the pool");
         }
     }
 
@@ -94,6 +99,6 @@ public class Projectile : MonoBehaviour
         rg.velocity = Vector2.zero;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(CollisionVFX.main.duration);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
