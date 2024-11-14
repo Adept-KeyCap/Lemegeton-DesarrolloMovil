@@ -43,8 +43,8 @@ public class Projectile : MonoBehaviour
         //Debug.Log("Range: "+range);
         if (distance > range)
         {
-            Destroy(gameObject);
-            Debug.Log("Proyectile Out of Reach, therefore Desrtoyed");
+            gameObject.SetActive(false);
+            Debug.Log("Proyectile Out of Reach, therefore back to the pool");
         }
     }
 
@@ -94,6 +94,6 @@ public class Projectile : MonoBehaviour
         rg.velocity = Vector2.zero;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(CollisionVFX.main.duration);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

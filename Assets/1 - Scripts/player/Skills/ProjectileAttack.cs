@@ -25,6 +25,7 @@ public class ProjectileAttack : MonoBehaviour
     public UnityEvent ShootOnRelease;
     [SerializeField] private AudioSource SFXProyectile;
 
+    ProjectilePool projectilePool;
     PlayerInput_map _Input;
     SpriteRenderer _crossHair;
     Vector2 _Position;
@@ -32,6 +33,10 @@ public class ProjectileAttack : MonoBehaviour
 
     private void Awake()
     {
+        if (ProjectilePool.Instance == null)
+        {
+            Debug.LogError("No ProjectilePool founded");
+        }
         _Input = new PlayerInput_map();
         _crossHair = targetObj.GetComponent<SpriteRenderer>();
         playerManager = player.GetComponent<PlayerManager>();
@@ -102,28 +107,41 @@ public class ProjectileAttack : MonoBehaviour
         // Calculate the rotation needed for the projectile to look at the target
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
 
-        // Instantiate the projectile with the calculated rotation
-        GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, rotation);
-        newProjectile.GetComponent<Projectile>().range = playerManager.shotRange;
-        newProjectile.GetComponent<Projectile>().speed = playerManager.shotSpeed;
-
-        // Optionally, you can add force or other behaviors to the projectile here
-        Rigidbody2D rb = newProjectile.GetComponent<Rigidbody2D>();
-
-        SFXProyectile.Play();
-
-        if (rb != null)
+        // Retrieve the projectile from the pool
+        GameObject newProjectile = ProjectilePool.Instance.GetPooledProjectile();
+        if (newProjectile != null)
         {
-            // Apply a force to propel the projectile in the direction it is facing
-            rb.AddForce(newProjectile.transform.up * player.GetComponent<PlayerManager>().shotSpeed, ForceMode2D.Impulse);
+            newProjectile.transform.position = firePoint.position;
+            newProjectile.transform.rotation = rotation;
+            newProjectile.SetActive(true);
 
-            isOnCd = true;
+            Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
+            projectileComponent.range = playerManager.shotRange;
+            projectileComponent.speed = playerManager.shotSpeed;
+            Rigidbody2D rb = newProjectile.GetComponent<Rigidbody2D>();
 
-            StartCoroutine(proyectileCD(proyectile_CD));
+            SFXProyectile.Play();
+
+            // Optionally, you can add force or other behaviors to the projectile here
+            if (rb != null)
+            {
+                // Apply a force to propel the projectile in the direction it is facing
+                rb.velocity = Vector2.zero;
+                rb.AddForce(newProjectile.transform.up * player.GetComponent<PlayerManager>().shotSpeed, ForceMode2D.Impulse);
+
+                isOnCd = true;
+
+                StartCoroutine(proyectileCD(proyectile_CD));
+            }
+            else
+            {
+                Debug.LogError("The projectile prefab must have a Rigidbody2D component.");
+            }
         }
+
         else
         {
-            Debug.LogError("The projectile prefab must have a Rigidbody2D component.");
+            Debug.Log("There wasn't any projectile on the pool");
         }
 
     }
