@@ -24,10 +24,15 @@ public class Projectile : MonoBehaviour
         this.range = range;
     }
 
+    private void OnEnable()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        startPos = gameObject.transform.position;
+    }
+
     private void Awake()
     {
         rg = GetComponent<Rigidbody2D>();
-        startPos = gameObject.transform.position;
         range = player.shotRange;
 
         if(UnityEngine.Object.FindAnyObjectByType<TutorialManager>() != null )

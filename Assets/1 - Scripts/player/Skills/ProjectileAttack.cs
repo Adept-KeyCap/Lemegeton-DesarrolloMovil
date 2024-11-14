@@ -111,9 +111,10 @@ public class ProjectileAttack : MonoBehaviour
         GameObject newProjectile = ProjectilePool.Instance.GetPooledProjectile();
         if (newProjectile != null)
         {
+            Debug.Log($"Founded{newProjectile}");
+            newProjectile.SetActive(true);
             newProjectile.transform.position = firePoint.position;
             newProjectile.transform.rotation = rotation;
-            newProjectile.SetActive(true);
 
             Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
             projectileComponent.range = playerManager.shotRange;
