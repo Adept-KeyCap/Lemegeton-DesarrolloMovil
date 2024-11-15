@@ -37,6 +37,8 @@ public class LostSoulScript : MonoBehaviour
     public GameObject acidPrefab;
     public Transform firePoint;
     public float shotDamage;
+
+    public LostSoulProjectilePool lostSoulsProjectilePool;
     #endregion
 
     #region AI RELATED
@@ -68,11 +70,12 @@ public class LostSoulScript : MonoBehaviour
         deathVFX.gameObject.SetActive(false);
         scoreBoard = UnityEngine.Object.FindObjectOfType<ScoreBoard>();
         chrono = UnityEngine.Object.FindObjectOfType<ChronometerManager>();
-
+        lostSoulsProjectilePool = FindObjectOfType<LostSoulProjectilePool>();
         player = GameObject.Find("_Player");
         //door = GameObject.Find("Door");
         rb = GetComponent<Rigidbody2D>();
         timer = firerate;
+
         //LM = door.GetComponent<LevelManagement>();
         //animator = GetComponent<Animator>();
         //audioSource = GetComponent<AudioSource>();
@@ -173,16 +176,21 @@ public class LostSoulScript : MonoBehaviour
     {
         Vector2 aimDirection = player.GetComponent<Rigidbody2D>().position - (Vector2)firePoint.position;
 
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, aimDirection);
+
         aimDirection.Normalize();
 
-        GameObject acidObject = Instantiate(acidPrefab, firePoint.position, Quaternion.identity);
+        GameObject acidObject = LostSoulProjectilePool.Instance.GetPooledProjectile();
         SoulBullet sBullet = acidObject.GetComponent<SoulBullet>();
+        sBullet.transform.position = firePoint.position;
+        sBullet.transform.rotation = rotation;
 
+        sBullet.gameObject.SetActive(true);
         SFXShot.Play();
         sBullet.shoot(aimDirection, 10, shotDamage);
-        //AcidShotController asController = acidObject.GetComponent<AcidShotController>();
-        //asController.shoot(aimDirection, 10);
-        //audioSource.PlayOneShot(acidClip);
+        
+
+
     }
 
     private bool isPlayerInRange(float range)

@@ -20,7 +20,7 @@ public class SoulBullet : MonoBehaviour
     {
         if (transform.position.magnitude > 80.0f)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -58,6 +58,8 @@ public class SoulBullet : MonoBehaviour
         rb.velocity = Vector2.zero;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(CollisionVFX.main.duration);
-        Destroy(gameObject);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.SetActive(false);
+
     }
 }

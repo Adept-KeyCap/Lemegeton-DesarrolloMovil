@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectilePool : MonoBehaviour
+public class LostSoulProjectilePool : MonoBehaviour
 {
-    public static ProjectilePool Instance { get; private set; }
+    public static LostSoulProjectilePool Instance { get; private set; }
     [SerializeField] private GameObject pooledProjectile;
     public int poolSize = 10;
     private List<GameObject> projectilePool;
