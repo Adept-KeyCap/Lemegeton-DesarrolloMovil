@@ -964,7 +964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3960058546996866969, guid: 363bbea753823254695a5b24aeb08935, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3721799
+      value: 1.3721796
       objectReference: {fileID: 0}
     - target: {fileID: 3960058546996866969, guid: 363bbea753823254695a5b24aeb08935, type: 3}
       propertyPath: m_LocalPosition.y
@@ -972,7 +972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4915288006850444685, guid: 363bbea753823254695a5b24aeb08935, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3721799
+      value: 1.3721796
       objectReference: {fileID: 0}
     - target: {fileID: 4915288006850444685, guid: 363bbea753823254695a5b24aeb08935, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1047,6 +1047,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363bbea753823254695a5b24aeb08935, type: 3}
+--- !u!114 &2120976806 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7424581410383231553, guid: 363bbea753823254695a5b24aeb08935, type: 3}
+  m_PrefabInstance: {fileID: 2120976805}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c636c0c999d9610468923ff9ccf65da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &222299091578452007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1544,6 +1555,10 @@ PrefabInstance:
       value: Dungeon Manager
       objectReference: {fileID: 0}
     - target: {fileID: 2135838740488322639, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 222299091578452019}
+    - target: {fileID: 2135838740488322639, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
       propertyPath: saving
       value: 
       objectReference: {fileID: 1104007648}
@@ -1551,6 +1566,14 @@ PrefabInstance:
       propertyPath: playerObj
       value: 
       objectReference: {fileID: 1451032440}
+    - target: {fileID: 2135838740488322639, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
+      propertyPath: chronometer
+      value: 
+      objectReference: {fileID: 8760546004893979600}
+    - target: {fileID: 2135838740488322639, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
+      propertyPath: camTransition
+      value: 
+      objectReference: {fileID: 2120976806}
     - target: {fileID: 2135838740488322639, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
       propertyPath: totalRoomsTxt
       value: 
@@ -1695,6 +1718,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1104007648}
   m_SourcePrefab: {fileID: 100100000, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
+--- !u!114 &8760546004893979600 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6582987315559995505, guid: 0d33e11be10f02d4dafe17f83deb0cbf, type: 3}
+  m_PrefabInstance: {fileID: 8760546004893979599}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7274dcc0c873ad4f8c6d5dc94d68d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

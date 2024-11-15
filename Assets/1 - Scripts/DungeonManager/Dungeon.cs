@@ -9,13 +9,13 @@ using TMPro;
 
 public class Dungeon : MonoBehaviour
 {
-    private ChronometerManager chronometer;
     private BoxCollider2D gameAreaCollider;
-    private CameraTransition camTransition;
-    private PlayerManager player;
-    [SerializeField] private GameObject playerObj;
-    [SerializeField] private LayerMask collisionLayerMask;
+    private GameObject playerObj;
 
+    [SerializeField] private ChronometerManager chronometer;
+    [SerializeField] private CameraTransition camTransition;
+    [SerializeField] private PlayerManager player;
+    [SerializeField] private LayerMask collisionLayerMask;
     [SerializeField] private SavingSystem saving;
     
     private int difficultylvl;
@@ -38,7 +38,6 @@ public class Dungeon : MonoBehaviour
     public int additionalEnemyCount = 0;
     public int currentCircle;
 
-
     [Header("Dungeon  Lists")]
     public List<GameObject> circlesToInstantiate = new List<GameObject>();
     public List<GameObject> InstatiatedCircles = new List<GameObject>();
@@ -49,15 +48,11 @@ public class Dungeon : MonoBehaviour
     private int remainingRooms;
 
 
-
     private void Awake()
     {
         boxColl = GetComponent<BoxCollider2D>();
-        chronometer = gameObject.GetComponentInChildren<ChronometerManager>();
-        camTransition = FindObjectOfType<CameraTransition>();
-        player = FindObjectOfType<PlayerManager>();
 
-        gameAreaCollider = GetComponent<BoxCollider2D>();
+        playerObj = player.gameObject;
 
         additionalEnemyCount = 0;
         currentCircle = 1;
@@ -88,15 +83,14 @@ public class Dungeon : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.CompareTag("Room"))
         {
             unclearedRooms++;
-            //Debug.Log(" has been detected, now uncleared Rooms = " + unclearedRooms.ToString());
         }
 
         if(collision.gameObject.CompareTag("Circle") && onSetUp == true)
         {
-            //Debug.Log("Circle Detected");
             if(!InstatiatedCircles.Contains(collision.gameObject))
                 InstatiatedCircles.Add(collision.gameObject);
 
@@ -105,7 +99,6 @@ public class Dungeon : MonoBehaviour
                 listComplete = true;
                 if (listComplete)
                 {
-                    //Debug.Log("List Complete");
                     ShuffleCircles();
                 }
             }
@@ -118,11 +111,9 @@ public class Dungeon : MonoBehaviour
         {
             unclearedRooms--;
             remainingRooms--;
-            //Debug.Log("Update uncleared Rooms = " + unclearedRooms.ToString());
+
             if (unclearedRooms == 0 && onSetUp == false)
             {
-                Debug.Log("Circle " + currentCircle + " Cleared");
-                //circleCleared = true;
                 StartCoroutine(CircleTransition(true));
             }
         }
@@ -133,7 +124,7 @@ public class Dungeon : MonoBehaviour
         if (cleared)
         {
             GameObject currentMap = InstatiatedCircles[currentCircle - 1];
-            Debug.Log("circle " + currentMap.name.ToString() + " cleared");
+            
             currentMap.SetActive(false);
 
             currentCircle = currentCircle + 1;
@@ -147,7 +138,6 @@ public class Dungeon : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("circle " + InstatiatedCircles[currentCircle - 1].gameObject.name.ToString() + " Will be activated");
                     InstatiatedCircles[currentCircle - 1].SetActive(true);
 
                     StartCoroutine(WaitAndCount());
@@ -163,12 +153,10 @@ public class Dungeon : MonoBehaviour
     {
         if (difficultylvl % 3 == 0)
         {
-            Debug.Log("Adding more enemies");
             additionalEnemyCount++;
         }
         else
         {
-            Debug.Log("Rising Stats");
             incubus_StatsMultiplier += incubus_StatsMultiplierPriv;
             LostSoul_StatsMultiplier += LostSoul_StatsMultiplierPriv;
             andras_StatsMultiplier += andras_StatsMultiplierPriv;
@@ -196,7 +184,7 @@ public class Dungeon : MonoBehaviour
             }
             else
             {
-                Debug.Log("Var list is Null ");
+                throw new Exception();
             }
         }
     }
@@ -204,12 +192,12 @@ public class Dungeon : MonoBehaviour
     private void ShuffleCircles()
     {
         InstatiatedCircles = InstatiatedCircles.OrderBy(x => Guid.NewGuid()).ToList();
+
         for(int i = 0; i < circlesToInstantiate.Count; i++)
         {
             InstatiatedCircles[i].gameObject.SetActive(false);
         }
         InstatiatedCircles[0].gameObject.SetActive(true);
-        //AudioListener.volume = 0.99f;
     }
 
     private int CountRooms()
@@ -238,7 +226,6 @@ public class Dungeon : MonoBehaviour
 
     IEnumerator WaitAndCount()
     {
-
         yield return new WaitForSeconds(2f);
 
         totalRooms = CountRooms();
@@ -249,9 +236,9 @@ public class Dungeon : MonoBehaviour
     public IEnumerator CircleTransition(bool cleared)
     {
         camTransition.CircleClearedTransition(currentCircle);
-        //AudioListener.volume = 1f;
+
         yield return new WaitForSeconds(7f);
-        //AudioListener.volume = 0.99f;
+        
         OnCircleCleared(cleared);
     }
 
