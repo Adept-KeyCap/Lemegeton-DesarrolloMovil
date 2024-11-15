@@ -36,6 +36,7 @@ public class Room : MonoBehaviour
     {
         edgeCollider = GetComponent<EdgeCollider2D>();
         mainBoxCollider = GetComponent<BoxCollider2D>();
+
         mainBoxCollider.enabled = true;
         edgeCollider.enabled = false;
     }
@@ -63,8 +64,6 @@ public class Room : MonoBehaviour
         var @object = other.gameObject;
         if (@object.CompareTag("Player") && playerInCombat == false)
         {
-            Debug.Log("Player Entered the Room");
-
             playerInCombat = true;
         }
         else if (@object.CompareTag("Enemy") || @object.CompareTag("EnemySoul") || @object.CompareTag("EnemyAndras"))
@@ -85,7 +84,6 @@ public class Room : MonoBehaviour
         var @object = other.gameObject;
         if (@object.CompareTag("Player"))
         {
-            Debug.Log("Player Exited the Room");
             playerInCombat = false;
         }
         else if (@object.CompareTag("Enemy") || @object.CompareTag("EnemySoul") || @object.CompareTag("EnemyAndras"))
@@ -114,7 +112,6 @@ public class Room : MonoBehaviour
 
     private Vector2 RandomEnemySpawnPos()
     {
-
         float newBoundary_x = UnityEngine.Random.Range(mainBoxCollider.bounds.min.x + 5, mainBoxCollider.bounds.max.x -5);
         float newBoundary_y = UnityEngine.Random.Range(mainBoxCollider.bounds.min.y + 5, mainBoxCollider.bounds.max.y -5);
 
@@ -124,7 +121,6 @@ public class Room : MonoBehaviour
 
     private void SpawnEnemies(int addEnemyCount)
     {
-
         for (int i = 0; i < addEnemyCount; i++)
         {
             int enemyToSpawn = UnityEngine.Random.Range(0, (numberOfEnemiesPrefabs));
@@ -151,7 +147,6 @@ public class Room : MonoBehaviour
                 andras.GetComponent<AndrasScript>().firerate = 6.5f;
             }
         }
-
     }
 
     private void IsPlayerInside()
@@ -163,7 +158,6 @@ public class Room : MonoBehaviour
             if(obj.gameObject.CompareTag("Player") && !roomUsed)
             {
                 playerInCombat = true;
-                Debug.Log("Player Entered");
                 edgeCollider.enabled = true;
                 StartCoroutine(WaitAndTrapPlayer(2, enemyPrefab1, enemyPrefab2, enemyPrefab3));
                 roomUsed = true;
@@ -183,7 +177,6 @@ public class Room : MonoBehaviour
             SpawnEnemies(2 + _dungeonManager.additionalEnemyCount);
         }
     }
-
 
     private void OnDrawGizmos()
     {
