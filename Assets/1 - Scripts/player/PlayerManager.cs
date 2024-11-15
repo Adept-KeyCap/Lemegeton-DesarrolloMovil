@@ -28,10 +28,6 @@ public class PlayerManager : MonoBehaviour
     public float invincibleTimer;
     public float timeInvincible = 2.0f;
 
-    //private string levelname;
-
-    //PlayerInput_map _Input;
-
     [Header("Movement config.")]
     public PlayerTouchMovement _playerTouchMovementScript;
     public GameObject joystickCanva;
@@ -57,8 +53,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Image blackScreen;
     
     [Header("Bars")]
-    private HealthBar _healthBar;
-    private DefenseBar _defenseBar;
+    [SerializeField] private HealthBar _healthBar;
+    [SerializeField] private DefenseBar _defenseBar;
 
     
     [Header("Audio")]
@@ -85,52 +81,21 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        //_Input = new PlayerInput_map();
-        _Rigidbody = GetComponent<Rigidbody2D>();
-        joystickCanva = GameObject.Find("Joystick Canva (Do Not Move)");
-        //_Notification = FindObjectOfType<itemsNotification>();
-        //levelname = SceneManager.GetActiveScene().name;
         health = maxHealth;
         defense = maxDefense;
-        _healthBar = FindObjectOfType<HealthBar>();
-        _healthBar.SetMaxHealth(maxHealth);
-        _defenseBar = FindObjectOfType<DefenseBar>();
-        _defenseBar.SetMaxDefense(maxDefense);
-        _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        Debug.Log("Notification Object: " + _Notification.gameObject.name.ToString());
+        _healthBar.SetMaxHealth(maxHealth);
+        _defenseBar.SetMaxDefense(maxDefense);
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _Rigidbody = GetComponent<Rigidbody2D>();        
 
         isRechargingDefense = false;
         isInvincible = false;
 
         InvokeRepeating("TransparencyCheck", 1f, 3f);
     }
-    //private void OnEnable()
-    //{
-    //    _Input.Enable();
-
-    //    //_Input.Player.Fire Significa atacar pero por bugs del New Input System no puedo cambiarle el nombre
-    //    //_Input.Player.Fire.performed += PerformAttack();
-
-    //    _Input.Player.Move.performed += OnMovement;
-    //    _Input.Player.Move.canceled += OnMovement;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    //_Input.Player.Fire.performed -= PerformAttack();
-
-    //    //_Input.Player.Fire Significa atacar pero por bugs del New Input System no puedo cambiarle el nombre
-    //    _Input.Player.Move.performed -= OnMovement;
-    //    _Input.Player.Move.canceled -= OnMovement;
-
-    //    _Input.Disable();
-    //}
-
-    //private Action<InputAction.CallbackContext> PerformAttack()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    
     private void Update()
     {
         if (isInvincible)
@@ -266,7 +231,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             health -= amount;
-            Debug.Log("Health " + health);
+
             SFXHit.Play();
             takeDamageVFX.Play();
             float loopsTime = timeInvincible / 6;
@@ -282,13 +247,9 @@ public class PlayerManager : MonoBehaviour
         if (health <= 0)
         {
             Death();
-        }
-        /*else
-        {
-            DamageVFX.Play(); // feedback of the damage
-        }*/
-        
+        }        
     }
+
     public void HazardLava()
     {
         defense = 0f;
@@ -304,34 +265,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
     
-
-    //private void OnGUI()
-    //{
-    //    GUIStyle labelStyle = new GUIStyle()
-    //    {
-    //        fontSize = 60,
-    //        normal = new GUIStyleState()
-    //        {
-    //            textColor = Color.green
-    //        }
-    //    };
-
-    //    GUIStyle invincibleLabel = new GUIStyle()
-    //    {
-    //        fontSize = 60,
-    //        normal = new GUIStyleState()
-    //        {
-    //            textColor = Color.yellow
-    //        }
-    //    };
-
-    //    GUI.Label(new Rect(10, 350, 500, 20), $"Health: ({health})", labelStyle);
-
-    //    if (isInvincible)
-    //    {
-    //        GUI.Label(new Rect(10, 280, 500, 20), $"Invincible: ({invincibleTimer})", invincibleLabel);
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -391,7 +324,6 @@ public class PlayerManager : MonoBehaviour
 
             interactionBtn.SetActive(false);
             attackBtn.SetActive(true);
-            Debug.Log(_Statue + ": Too Far");
         }
         else if(collision == null)
             _Item = null;
@@ -403,8 +335,8 @@ public class PlayerManager : MonoBehaviour
         {
             SFXPickUp.Play();
 
-            Debug.Log("Trying to pick Up");
             speed += _Item.item_speed;
+
             if (health < maxHealth)
             {
                 if ((_Item.item_health + health) <= maxHealth)
@@ -447,14 +379,13 @@ public class PlayerManager : MonoBehaviour
                     GameObject @object = collision.gameObject;
                     if (@object.CompareTag("Item"))
                     {
-                        Debug.Log(@object.name + " has been detected and will be destoyed");
                         Destroy(@object);
                     }
                 }
             }
             else
             {
-                Debug.Log("No Items to pick Up");
+                //Debug.Log("No Items to pick Up");
             }
         }
         
@@ -462,15 +393,12 @@ public class PlayerManager : MonoBehaviour
     
     public void ActivateStatue()
     {
-        Debug.Log("Activate Statue attempt");
-        Debug.Log("Is Statue near by?: " + statueNearBy + "Is statue Null?: " + _Statue);
         if (statueNearBy == true && _Statue != null)
         {
-            Debug.Log("ActivateStatue called.");
             ItemStatueSpawner statueSpawner = _Statue.GetComponent<ItemStatueSpawner>();
+
             if (statueSpawner != null)
             {
-                Debug.Log("statueSpawner found.");
                 statueSpawner.DropItems();
             }
         }
@@ -502,7 +430,6 @@ public class PlayerManager : MonoBehaviour
         endCanva = true;
         gameObject.SetActive(false);
         blackScreen.DOColor(Color.clear, 1.3f).OnComplete(() => { DOTween.Kill(gameObject); });
-        // SceneManager.LoadScene("HUB");
     }
     
     public float GetSpeed()

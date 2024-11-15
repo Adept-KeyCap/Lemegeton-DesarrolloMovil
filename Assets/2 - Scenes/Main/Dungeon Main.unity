@@ -1139,6 +1139,14 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4784871271395500878, guid: d575336793e31034aa8643bec7f9a4c8, type: 3}
+      propertyPath: _healthBar
+      value: 
+      objectReference: {fileID: 5337936903630466704}
+    - target: {fileID: 4784871271395500878, guid: d575336793e31034aa8643bec7f9a4c8, type: 3}
+      propertyPath: _defenseBar
+      value: 
+      objectReference: {fileID: 5337936903630466703}
+    - target: {fileID: 4784871271395500878, guid: d575336793e31034aa8643bec7f9a4c8, type: 3}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 177917019}
@@ -1146,6 +1154,10 @@ PrefabInstance:
       propertyPath: _Notification
       value: 
       objectReference: {fileID: 92497204}
+    - target: {fileID: 4784871271395500878, guid: d575336793e31034aa8643bec7f9a4c8, type: 3}
+      propertyPath: joystickCanva
+      value: 
+      objectReference: {fileID: 126407598}
     - target: {fileID: 4784871271395500878, guid: d575336793e31034aa8643bec7f9a4c8, type: 3}
       propertyPath: interactionBtn
       value: 
@@ -1428,6 +1440,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5337936903630466703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4178071726970795667, guid: 00a3f97a1e998de44ac363f50c16c0c5, type: 3}
+  m_PrefabInstance: {fileID: 5337936903630466699}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5375704139b69444f86f47696b0fe9f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5337936903630466704 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1655431925095620606, guid: 00a3f97a1e998de44ac363f50c16c0c5, type: 3}
+  m_PrefabInstance: {fileID: 5337936903630466699}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331c5d78bbc55e9489ae45daa2de18ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6203258993092369353
