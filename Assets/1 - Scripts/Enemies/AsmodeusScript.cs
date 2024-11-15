@@ -26,7 +26,6 @@ public class AsmodeusScript : MonoBehaviour
     private bool isStrikingCrRunning = false;
     private bool isBulletHellCrRunning = false;
 
-    [SerializeField] private bool isTouchingWalls = false;
     [SerializeField] private ParticleSystem VFX_TpFrom;
     [SerializeField] private ParticleSystem VFX_TpTo;
     [SerializeField] private ParticleSystem VFX_Tired;
@@ -36,7 +35,7 @@ public class AsmodeusScript : MonoBehaviour
     #region MOVE RELATED
     public float moveSpeed;
     Vector2 position;
-    bool firstMove = false;
+
     [SerializeField] private GameObject spawnPoint;
     #endregion
 
@@ -66,8 +65,7 @@ public class AsmodeusScript : MonoBehaviour
     [SerializeField] private float timeStill;
     [SerializeField] private float timeBulletHell;
     [SerializeField] private float rotationOffset = 87f; // Rotation offset
-    // public float range = 20;
-    bool chooseDir = false;
+
     Vector3 randomDir;
     #endregion
 
@@ -190,57 +188,13 @@ public class AsmodeusScript : MonoBehaviour
             StopCoroutine(WaitStill(1));
         }
         _healthBar.SetHealth(health);
-        //if (isPlayerInRange(range) && currState != asmoState.Dead)
-        //{
-        //    currState = asmoState.Run;
-        //}
-        //else if (!isPlayerInRange(range) && currState != asmoState.Dead)
-        //{
-        //    currState = asmoState.Wander;
-        //}
     }
 
-    //private IEnumerator chooseDirection()
-    //{
-    //    chooseDir = true;
-    //    if (!firstMove)
-    //    {
-    //        yield return new WaitForSeconds(0.1f);
-    //        //animator.SetBool("Moving", true);
-    //        firstMove = true;
-    //    }
-    //    else
-    //    {
-    //        yield return new WaitForSeconds(Random.Range(1f, 2f));
-    //    }
-    //    randomDir = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-    //    randomDir.Normalize();
-    //    chooseDir = false;
-    //}
 
-    //void Wander()
-    //{
-
-    //    if (!chooseDir)
-    //    {
-    //        StartCoroutine(chooseDirection());
-    //    }
-    //    Vector2 position = rb.position;
-
-    //    position.x = position.x + moveSpeed * randomDir.x * Time.deltaTime;
-    //    position.y = position.y + moveSpeed * randomDir.y * Time.deltaTime;
-
-    //    rb.MovePosition(position);
-    //}
 
     void ShootingFast()
     {
-        // animator.SetBool("Moving", true);
-        // StopCoroutine(chooseDirection());
-        //if (rb.velocity == Vector2.zero)
-        //{
-        //    StopCoroutine(WaitStill(1));
-        //}
+
         SFXRun.Play();
 
 
@@ -358,7 +312,6 @@ public class AsmodeusScript : MonoBehaviour
         // Check for a match with the specified name on any GameObject that collides with your GameObject
         if (collision.gameObject.tag == "BossWall" && currState != asmoState.Striking)
         {
-            isTouchingWalls = true;
             StartCoroutine(VFXForWallCollison());
         }
     }

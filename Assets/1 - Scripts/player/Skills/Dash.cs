@@ -111,7 +111,6 @@ public class Dash : MonoBehaviour
 
     private IEnumerator WaitAndExecute_Dash(float waitTime)
     {
-        Debug.Log("Coroutine started");
         Use_Dash();
         capCollider.enabled = false;
         // Wait for the specified time
@@ -120,7 +119,6 @@ public class Dash : MonoBehaviour
         // After waiting, execute the method
         RestoreParent();
         capCollider.enabled = true;
-        Debug.Log("Coroutine ended");
     }
 
     private IEnumerator DashCD(float waitTime)

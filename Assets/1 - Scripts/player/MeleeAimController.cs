@@ -39,7 +39,6 @@ public class Crosshair : MonoBehaviour
     private Vector2 currentAimDirection;
 
     bool isOnCd = false;
-    private bool hasEnemyNearby = false;
 
     //[SerializeField] private FloatingJoystick Joystick;
 
